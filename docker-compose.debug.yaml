@@ -1,0 +1,3 @@
+services:
+  coreai-mcu-generation-oai:
+    command: npm run start:debug

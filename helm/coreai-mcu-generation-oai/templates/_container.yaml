@@ -1,0 +1,2 @@
+{{- define "coreai-mcu-generation-oai.container" -}}
+{{- end -}}

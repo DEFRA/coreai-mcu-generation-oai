@@ -1,0 +1,19 @@
+services:
+  coreai-mcu-generation-oai:
+    build:
+      context: .
+      target: production
+    image: coreai-mcu-generation-oai
+    container_name: coreai-mcu-generation-oai
+    depends_on:
+      - coreai-mcu-generation-oai-postgres
+    environment:
+      APPINSIGHTS_CLOUDROLE: coreai-mcu-generation-oai-local
+      APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
+
+  coreai-mcu-generation-oai-postgres:
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: coreai-mcu-generation-oai
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
