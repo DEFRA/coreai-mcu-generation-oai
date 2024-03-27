@@ -37,20 +37,20 @@ resources:
 extends:
   template: /pipelines/common-app-build.yaml@DEFRA-ADPPipelineCommon
   parameters:
-    projectName: "coreai-mcu-generation-oai"
-    serviceName: "coreai-mcu-generation-oai"
+    projectName: "coreai-mcu-knowledge-pgv"
+    serviceName: "coreai-mcu-knowledge-pgv"
     deployFromFeature: ${{ parameters.deployFromFeature }}
     appBuildConfig:
       appFrameworkType: "nodejs"    
       projectPath: "./package.json"
       manifestPath: "./package.json"
-      imageRepoName: "coreai-mcu-generation-oai"
+      imageRepoName: "coreai-mcu-knowledge-pgv"
     appTestConfig:
       testFilePath: "./docker-compose.test.yaml"
     appDeployConfig:
       filepath: "./appConfig"  
       filetype: "yaml"
       variableGroups:
-        - coreai-mcu-generation-oai-<environment>
+        - coreai-mcu-knowledge-pgv-<environment>
       variables:
-        - coreai-mcu-generation-oai-APPINSIGHTS-CONNECTIONSTRING
+        - coreai-mcu-knowledge-pgv-APPINSIGHTS-CONNECTIONSTRING
