@@ -8,11 +8,9 @@ services:
       target: development
     image: coreai-mcu-generation-oai-development
     container_name: coreai-mcu-generation-oai-development
-    depends_on:
-      - coreai-mcu-generation-oai-azurite
     ports:
-      - "3000:3000"
-      - "9229:9229"
+      - "4000:3000"
+      - "8000:9229"
     volumes:
       - ./app:/home/node/app
       - ./test:/home/node/test
@@ -22,20 +20,13 @@ services:
       MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST}
       MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER}
       MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD}
-      POSTGRES_HOST: ${POSTGRES_HOST:-coreai-mcu-knowledge-pgv}
+      POSTGRES_HOST: ${POSTGRES_HOST:-host.docker.internal}
       GENERATION_REQUEST_OAI_SUBSCRIPTION: ${GENERATION_REQUEST_OAI_SUBSCRIPTION:-coreai-mcu-generation-oai}
       GENERATION_REQUEST_TOPIC: ${GENERATION_REQUEST_TOPIC:-coreai-mcu-generation-request}${MESSAGE_QUEUE_SUFFIX}
       RESPONSE_PROCESSING_QUEUE_ADDRESS: ${RESPONSE_PROCESSING_QUEUE_ADDRESS:-coreai-mcu-generation-response}${MESSAGE_QUEUE_SUFFIX}
       AZURE_STORAGE_USE_CONNECTION_STRING: ${AZURE_STORAGE_USE_CONNECTION_STRING:-true}
       AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING:-DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;}
       AZURE_STORAGE_ACCOUNT: ${AZURE_STORAGE_ACCOUNT:-devstoreaccount1}
-
-  coreai-mcu-generation-oai-azurite:
-    image: mcr.microsoft.com/azure-storage/azurite
-    ports:
-      - "${CORE_AI_GENERATION_OAI_BLOB_PORT:-10000}:10000"
-    volumes:
-      - azurite_data:/data
 
 volumes:
   azurite_data:

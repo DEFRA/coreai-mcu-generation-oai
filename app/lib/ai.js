@@ -1,4 +1,4 @@
-const { OpenAIEmbeddings, AzureOpenAI } = require('@langchain/openai')
+const { OpenAIEmbeddings, ChatOpenAI } = require('@langchain/openai')
 const aiConfig = require('../config/ai')
 
 const onFailedAttempt = async (error) => {
@@ -15,10 +15,10 @@ const embeddings = new OpenAIEmbeddings({
   onFailedAttempt
 })
 
-const generation = new AzureOpenAI({
+const generation = new ChatOpenAI({
   azureOpenAIApiInstanceName: aiConfig.instanceName,
   azureOpenAIApiKey: aiConfig.apiKey,
-  azureOpenAIApiDeploymentName: aiConfig.embeddingsModelName,
+  azureOpenAIApiDeploymentName: aiConfig.generationModelName,
   azureOpenAIApiVersion: aiConfig.apiVersion,
   onFailedAttempt
 })

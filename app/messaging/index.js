@@ -1,18 +1,19 @@
 const { MessageReceiver } = require('ffc-messaging')
 const { generationSubscription } = require('../config/messaging')
+const { processGenerationRequest } = require('./inbound/process-generation')
 
-let responseReceiver
+let generationReceiver
 
 const start = async () => {
-  const generationAction = message => console.log(message.body)
-  responseReceiver = new MessageReceiver(generationSubscription, generationAction)
-  await responseReceiver.subscribe()
+  const generationAction = message => processGenerationRequest(message, generationReceiver)
+  generationReceiver = new MessageReceiver(generationSubscription, generationAction)
+  await generationReceiver.subscribe()
 
   console.info('Ready to receive messages')
 }
 
 const stop = async () => {
-  await responseReceiver.closeConnection()
+  await generationReceiver.closeConnection()
 }
 
 module.exports = { start, stop }
