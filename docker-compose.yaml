@@ -12,7 +12,7 @@ services:
       GENERATION_REQUEST_TOPIC: ${GENERATION_REQUEST_TOPIC:-coreai-mcu-generation-request}
       RESPONSE_PROCESSING_QUEUE_ADDRESS: ${RESPONSE_PROCESSING_QUEUE_ADDRESS:-coreai-mcu-generation-response}
       POSTGRES_DB: coreai-mcu-knowledge-pgv
-      POSTGRES_HOST: ${POSTGRES_HOST:-core-ai-mcu-knwoledge-pgv}
+      POSTGRES_HOST: ${POSTGRES_HOST:-core-ai-mcu-knowledge-pgv}
       POSTGRES_PORT: 5432
       POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
