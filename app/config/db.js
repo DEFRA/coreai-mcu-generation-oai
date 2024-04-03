@@ -1,3 +1,4 @@
+const Joi = require('joi')
 const { DefaultAzureCredential } = require('@azure/identity')
 
 const schema = Joi.object({
