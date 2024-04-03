@@ -5,20 +5,9 @@ services:
       target: production
     image: coreai-mcu-generation-oai
     container_name: coreai-mcu-generation-oai
-    depends_on:
-      - coreai-mcu-generation-oai-postgres
     environment:
       APPINSIGHTS_CLOUDROLE: coreai-mcu-generation-oai-local
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
-<<<<<<< Updated upstream
-
-  coreai-mcu-generation-oai-postgres:
-    image: postgres:11.4-alpine
-    environment:
-      POSTGRES_DB: coreai-mcu-generation-oai
-      POSTGRES_PASSWORD: ppp
-      POSTGRES_USERNAME: postgres
-=======
       GENERATION_REQUEST_OAI_SUBSCRIPTION: ${GENERATION_REQUEST_OAI_SUBSCRIPTION:-coreai-mcu-generation-oai}
       GENERATION_REQUEST_TOPIC: ${GENERATION_REQUEST_TOPIC:-coreai-mcu-generation-request}
       RESPONSE_PROCESSING_QUEUE_ADDRESS: ${RESPONSE_PROCESSING_QUEUE_ADDRESS:-coreai-mcu-generation-response}
@@ -42,4 +31,3 @@ services:
       GENERATION_MODEL_NAME: ${GENERATION_MODEL_NAME:-test}
       DOCUMENTS_API_BASE_URL: ${DOCUMENTS_API_BASE_URL:-test}
       RESPONSES_API_BASE_URL: ${RESPONSES_API_BASE_URL:-test}
->>>>>>> Stashed changes
