@@ -10,14 +10,14 @@ const sharedConfigSchema = {
 
 const schema = Joi.object({
   generationSubscription: {
-    address: Joi.string(),
-    topic: Joi.string(),
-    type: Joi.string(),
+    address: Joi.string().required(),
+    topic: Joi.string().required(),
+    type: Joi.string().required(),
     ...sharedConfigSchema
   },
   responseProcessingQueue: {
-    address: Joi.string(),
-    type: Joi.string(),
+    address: Joi.string().required(),
+    type: Joi.string().required(),
     ...sharedConfigSchema
   }
 })

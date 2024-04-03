@@ -19,7 +19,7 @@ const config = {
 const { error, value } = schema.validate(config, { abortEarly: false })
 
 if (error) {
-  throw new Error(`The storage config is invalid. ${error.message}`)
+  throw new Error(`The AI config is invalid. ${error.message}`)
 }
 
 module.exports = value

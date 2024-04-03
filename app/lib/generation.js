@@ -3,7 +3,8 @@ const { prompts, types } = require('../constants/prompts')
 const { generation } = require('../lib/ai')
 const { getVectorStore } = require('../lib/vector-store')
 const { StringOutputParser } = require('@langchain/core/output_parsers')
-const { RunnableMap, RunnableLambda, RunnablePassthrough } = require('@langchain/core/runnables')
+const { formatDocumentsAsString } = require('langchain/util/document')
+const { RunnableMap, RunnableLambda, RunnableSequence, RunnablePassthrough } = require('@langchain/core/runnables')
 
 const buildPrompt = () => {
   const prompt = ChatPromptTemplate.fromTemplate(prompts[types.SYSTEM_PROMPT])
@@ -16,34 +17,49 @@ const generateResponse = async (documentId, userPrompt) => {
 
   const prompt = buildPrompt(userPrompt)
 
-  const outputParser = new StringOutputParser()
+  // TODO: Create function to load document from Documents service via API call
+  const document = 'What is SFI?'
 
-  const document = 'Hi there, I am complaining about fly tipping near my home. Can you advise me?'
+  const chain = RunnableSequence.from([
+    RunnablePassthrough.assign({
+      context: (input) => formatDocumentsAsString(input.context)
+    }),
+    prompt,
+    generation,
+    new StringOutputParser()
+  ])
 
-  const runnable = RunnableMap.from({
-    document: new RunnablePassthrough(),
-    // context: new RunnablePassthrough(),
-    // // context: new RunnableLambda({
-    // //   func: (input) =>
-    // //     retriever.invoke(input).then((response) => response[0].pageContent),
-    // //   }).withConfig({ runName: "contextRetriever" }),
-    requests: new RunnablePassthrough()
+  let retrieveChain = new RunnableMap({
+    steps: {
+      context: new RunnableLambda({
+        func: async (input) => {
+          const documents = await retriever.invoke(input.document)
+
+          return documents
+        }
+      }),
+      document: new RunnableLambda({
+        func: (input) => input.document,
+      }),
+      requests: new RunnableLambda({
+        func: (input) => input.requests
+      })
+    }
   })
 
+  retrieveChain = retrieveChain.assign({ response: chain })
 
-  const chain = runnable
-    .pipe(prompt)
-    .pipe(generation)
-    .pipe(outputParser)
-  
-  const response = await chain.invoke({
-    document: document,
+  const result = await retrieveChain.invoke({
+    document,
     requests: userPrompt
   })
 
-  console.log(response)
-
-  return response
+  return {
+    documentId,
+    response: result.response,
+    citations: result.context,
+    userPrompt
+  }
 }
 
 module.exports = {

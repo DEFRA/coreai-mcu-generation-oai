@@ -4,9 +4,9 @@ const { LLM_RESPONSE } = require('../../constants/events')
 
 const createMessage = (data) => ({
   body: {
-    document_id: data.document_id,
+    document_id: data.documentId,
     llm: 'GPT3.5',
-    user_prompt: data.user_prompt,
+    user_prompt: data.userPrompt,
     citations: data.citations,
     response: data.response
   },
@@ -14,7 +14,7 @@ const createMessage = (data) => ({
   source: 'coreai-mcu-generation-oai'
 })
 
-const sendGenerationRequest = async (data) => {
+const sendResponse = async (data) => {
   const sender = new MessageSender(responseProcessingQueue)
 
   const message = createMessage(data)
@@ -24,5 +24,5 @@ const sendGenerationRequest = async (data) => {
 }
 
 module.exports = {
-  sendGenerationRequest
+  sendResponse
 }
