@@ -5,6 +5,7 @@ const { getVectorStore } = require('../lib/vector-store')
 const { StringOutputParser } = require('@langchain/core/output_parsers')
 const { formatDocumentsAsString } = require('langchain/util/document')
 const { RunnableMap, RunnableLambda, RunnableSequence, RunnablePassthrough } = require('@langchain/core/runnables')
+const { getDocumentContent } = require('../services/documents')
 
 const buildPrompt = () => {
   const prompt = ChatPromptTemplate.fromTemplate(prompts[types.SYSTEM_PROMPT])
@@ -17,8 +18,7 @@ const generateResponse = async (documentId, userPrompt) => {
 
   const prompt = buildPrompt(userPrompt)
 
-  // TODO: Create function to load document from Documents service via API call
-  const document = 'What is SFI?'
+  const document = await getDocumentContent(documentId)
 
   const chain = RunnableSequence.from([
     RunnablePassthrough.assign({

@@ -1,6 +1,6 @@
 {
   "name": "coreai-mcu-generation-oai",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
   "homepage": "github.com?owner=defra&repo=coreai-mcu-generation-oai&organization=defra",
   "main": "app/index.js",
@@ -21,13 +21,14 @@
   "dependencies": {
     "@azure/identity": "^4.0.1",
     "@hapi/hapi": "21.3.2",
-    "applicationinsights": "2.8.0",
-    "joi": "^17.12.3",
     "@langchain/azure-openai": "^0.0.4",
     "@langchain/community": "^0.0.43",
     "@langchain/core": "^0.1.52",
     "@langchain/openai": "^0.0.24",
+    "applicationinsights": "2.8.0",
+    "date-fns": "^3.6.0",
     "ffc-messaging": "^2.9.0",
+    "joi": "^17.12.3",
     "langchain": "^0.1.30",
     "log-timestamp": "^0.3.0",
     "pg": "^8.11.4"
