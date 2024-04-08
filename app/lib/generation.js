@@ -75,6 +75,8 @@ const generateResponse = async (documentId, userPrompt) => {
     requests: userPrompt
   })
 
+  console.log(summary)
+
   return {
     documentId,
     response: generate.response,

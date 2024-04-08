@@ -35,14 +35,48 @@ You are an expert in summarising written documents. You should summarise the tex
 
 Do not infer anything about the document that is not explicitly stated.
 
-Return a JSON object containing:
-  - author: [The author of the document - set to null if not known],
-  - title: [The title of the document - set to null if not known],
-  - summary: [Your summary of the document],
-  - key_points: [Any key points made by the author],
-  - key_facts: [Any key facts or figures mentioned in the document],
-  - sentiment: [The sentiment of the document]
-  - category: [Assign one of these categories: 'Farming', 'Fishing', 'Environment' - set to 'Unknown' if not known]
+Return a JSON object that conforms to the schema below:
+{{
+  "type": "object",
+  "properties": {{
+    "author": {{
+      "type": ["string", "Unknown"],
+      "description": "The author of the document - set to "Unknown" if not known"
+    }},
+    "title": {{
+      "type": ["string", "Unknown"],
+      "description": "The title of the document - set to "Unknown" if not known"
+    }},
+    "summary": {{
+      "type": "string",
+      "description": "Your summary of the document"
+    }},
+    "key_points": {{
+      "type": "array",
+      "description": "Any key points made by the author",
+      "items": {{
+        "type": "string"
+      }}
+    }},
+    "key_facts": {{
+      "type": "array",
+      "description": "Any key facts or figures mentioned in the document",
+      "items": {{
+        "type": "string"
+      }}
+    }},
+    "sentiment": {{
+      "type": "string",
+      "description": "The sentiment of the document"
+    }},
+    "category": {{
+      "type": "string",
+      "description": "Assign one of these categories: 'Farming', 'Fishing', 'Environment' - set to "Unknown" if not known",
+      "enum": ["Farming", "Fishing", "Environment", "Unknown"]
+    }}
+  }},
+  "required": ["title", "author", "summary", "key_points", "key_facts", "sentiment", "category"]
+}}
 [/INST]
 
 [TEXT]
