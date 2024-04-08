@@ -8,7 +8,16 @@ const createMessage = (data) => ({
     llm: 'GPT3.5',
     user_prompt: data.userPrompt,
     citations: data.citations,
-    response: data.response
+    response: data.response,
+    document_summary: {
+      author: data.summary.author,
+      title: data.summary.title,
+      summary: data.summary.summary,
+      key_points: data.summary.key_points,
+      key_facts: data.summary.key_facts,
+      sentiment: data.summary.sentiment,
+      category: data.summary.category
+    }
   },
   type: LLM_RESPONSE,
   source: 'coreai-mcu-generation-oai'

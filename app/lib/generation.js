@@ -2,23 +2,15 @@ const { ChatPromptTemplate } = require('@langchain/core/prompts')
 const { prompts, types } = require('../constants/prompts')
 const { generation } = require('../lib/ai')
 const { getVectorStore } = require('../lib/vector-store')
-const { StringOutputParser } = require('@langchain/core/output_parsers')
+const { StringOutputParser, JsonOutputParser } = require('@langchain/core/output_parsers')
 const { formatDocumentsAsString } = require('langchain/util/document')
 const { RunnableMap, RunnableLambda, RunnableSequence, RunnablePassthrough } = require('@langchain/core/runnables')
 const { getDocumentContent } = require('../services/documents')
 
-const buildPrompt = () => {
-  const prompt = ChatPromptTemplate.fromTemplate(prompts[types.SYSTEM_PROMPT])
-
-  return prompt
-}
-
-const generateResponse = async (documentId, userPrompt) => {
+const buildGenerateChain = async () => {
   const retriever = (await getVectorStore()).asRetriever()
 
-  const prompt = buildPrompt(userPrompt)
-
-  const document = await getDocumentContent(documentId)
+  const prompt = ChatPromptTemplate.fromTemplate(prompts[types.GENERATE_PROMPT])
 
   const chain = RunnableSequence.from([
     RunnablePassthrough.assign({
@@ -49,15 +41,47 @@ const generateResponse = async (documentId, userPrompt) => {
 
   retrieveChain = retrieveChain.assign({ response: chain })
 
-  const result = await retrieveChain.invoke({
+  return retrieveChain
+}
+
+const buildSummaryChain = () => {
+  const prompt = ChatPromptTemplate.fromTemplate(prompts[types.SUMMARISE_PROMPT])
+
+  const chain = RunnableSequence.from([
+    RunnablePassthrough.assign({
+      document: (input) => input.document
+    }),
+    prompt,
+    generation,
+    new JsonOutputParser()
+  ])
+
+  return chain
+}
+
+const generateResponse = async (documentId, userPrompt) => {
+  const document = await getDocumentContent(documentId)
+
+  const generateChain = await buildGenerateChain()
+  const summaryChain = buildSummaryChain()
+
+  const chain = RunnableMap.from({
+    generate: generateChain,
+    summary: summaryChain
+  })
+
+  const { generate, summary } = await chain.invoke({
     document,
     requests: userPrompt
   })
 
+  console.log(summary)
+
   return {
     documentId,
-    response: result.response,
-    citations: result.context,
+    response: generate.response,
+    citations: generate.context,
+    summary,
     userPrompt
   }
 }
