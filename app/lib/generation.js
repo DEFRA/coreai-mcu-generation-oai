@@ -6,6 +6,7 @@ const { StringOutputParser, JsonOutputParser } = require('@langchain/core/output
 const { formatDocumentsAsString } = require('langchain/util/document')
 const { RunnableMap, RunnableLambda, RunnableSequence, RunnablePassthrough } = require('@langchain/core/runnables')
 const { getDocumentContent } = require('../services/documents')
+const { getAllResponses } = require('../services/responses')
 
 const buildGenerateChain = async () => {
   const retriever = (await getVectorStore()).asRetriever()
@@ -35,6 +36,9 @@ const buildGenerateChain = async () => {
       }),
       requests: new RunnableLambda({
         func: (input) => input.requests
+      }),
+      previous_response: new RunnableLambda({
+        func: (input) => input.previous_response
       })
     }
   })
@@ -59,8 +63,18 @@ const buildSummaryChain = () => {
   return chain
 }
 
+const getPreviousResponse = async (documentId) => {
+  const responses = await getAllResponses(documentId)
+
+  const { response } = responses[0] ?? ''
+
+  return response
+}
+
 const generateResponse = async (documentId, userPrompt) => {
   const document = await getDocumentContent(documentId)
+
+  const previousResponse = await getPreviousResponse(documentId)
 
   const generateChain = await buildGenerateChain()
   const summaryChain = buildSummaryChain()
@@ -72,10 +86,9 @@ const generateResponse = async (documentId, userPrompt) => {
 
   const { generate, summary } = await chain.invoke({
     document,
-    requests: userPrompt
+    requests: userPrompt,
+    previous_response: previousResponse
   })
-
-  console.log(summary)
 
   return {
     documentId,
