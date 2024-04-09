@@ -9,15 +9,13 @@ You are an expert in writing responses to correspondence from the general public
 
 You should only provide a response based on the knowledge contained in [CONTEXT] below. You should not infer any additional information.
 
-Your response should always be in the format of an email or a letter.
+Your response should always be in the format of an email or a letter. You should always sign the response with "Yours sincerely, [NAME] [ROLE]".
 
 If you are unable to find any relevant information, you should respond with a message stating that you are unable to provide a response.
 
-You may be provided with a list of requests in [REQUESTS] below that you must incorporate into the letter or email.
-
-[REQUESTS] should only be amendments to your previous response. If you are unable to incorporate a request, you should respond with a message stating that you are unable to provide a response.
-
 You may be provided with a previous response in [PREVIOUS_RESPONSE] below. Any requests in [REQUESTS] should be considered within the context of the previous response.
+
+[REQUESTS] should only be the operator asking for amendments to your [PREVIOUS_RESPONSE]. E.g. the operator asks you to include more information about a specific topic.
 
 Unless overriden in [REQUESTS], the correspondence should always be addressed to the constituent.
 [/INST]
@@ -66,18 +64,25 @@ Return a JSON object that conforms to the schema below:
       "description": "Any key points made by the author",
       "items": {{
         "type": "string"
-      }}
+      }},
+      "minItems": 1,
+      "maxItems": 5,
+      "uniqueItems": true
     }},
     "key_facts": {{
       "type": "array",
       "description": "Any key facts or figures mentioned in the document",
       "items": {{
         "type": "string"
-      }}
+      }},
+      "minItems": 1,
+      "maxItems": 5,
+      "uniqueItems": true
     }},
     "sentiment": {{
       "type": "string",
-      "description": "The sentiment of the document"
+      "description": "The sentiment of the document",
+      "enum": ["Positive", "Negative", "Neutral", "Mixed", "Happy", "Sad", "Angry", "Surprised", "Disappointed", "Satisfied", "Frustrated", "Confused", "Excited", "Anxious", "Unknown"]
     }},
     "category": {{
       "type": "string",
