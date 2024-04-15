@@ -76,15 +76,9 @@ const generateResponse = async (documentId, userPrompt) => {
 
   const previousResponse = await getPreviousResponse(documentId)
 
-  const generateChain = await buildGenerateChain()
-  const summaryChain = buildSummaryChain()
+  const chain = await buildGenerateChain()
 
-  const chain = RunnableMap.from({
-    generate: generateChain,
-    summary: summaryChain
-  })
-
-  const { generate, summary } = await chain.invoke({
+  const generate = await chain.invoke({
     document,
     requests: userPrompt,
     previous_response: previousResponse
@@ -94,11 +88,23 @@ const generateResponse = async (documentId, userPrompt) => {
     documentId,
     response: generate.response,
     citations: generate.context,
-    summary,
     userPrompt
   }
 }
 
+const generateSummary = async (documentId) => {
+  const document = await getDocumentContent(documentId)
+
+  const chain = buildSummaryChain()
+
+  const summary = await chain.invoke({
+    document
+  })
+
+  return summary
+}
+
 module.exports = {
-  generateResponse
+  generateResponse,
+  generateSummary
 }
