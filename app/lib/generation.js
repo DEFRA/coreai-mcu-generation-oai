@@ -7,8 +7,18 @@ const { formatDocumentsAsString } = require('langchain/util/document')
 const { RunnableMap, RunnableLambda, RunnableSequence, RunnablePassthrough } = require('@langchain/core/runnables')
 const { getDocumentContent } = require('../services/documents')
 
-const buildGenerateChain = async () => {
-  const retriever = (await getVectorStore()).asRetriever()
+const buildGenerateChain = async (knowledge) => {
+  const vectorStore = await getVectorStore()
+  let retriever
+  if (knowledge && knowledge.length > 0) {
+    const filter = {
+      filter: { "documentId": { "in": knowledge } }
+    }
+
+    retriever = vectorStore.asRetriever(filter)
+  } else {
+    retriever = vectorStore.asRetriever()
+  }
 
   const prompt = ChatPromptTemplate.fromTemplate(prompts[types.GENERATE_PROMPT])
 
@@ -59,10 +69,10 @@ const buildSummaryChain = () => {
   return chain
 }
 
-const generateResponse = async (documentId, userPrompt) => {
+const generateResponse = async (documentId, userPrompt, knowledge) => {
   const document = await getDocumentContent(documentId)
 
-  const generateChain = await buildGenerateChain()
+  const generateChain = await buildGenerateChain(knowledge)
   const summaryChain = buildSummaryChain()
 
   const chain = RunnableMap.from({
