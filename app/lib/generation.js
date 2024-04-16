@@ -8,8 +8,18 @@ const { RunnableMap, RunnableLambda, RunnableSequence, RunnablePassthrough } = r
 const { getDocumentContent } = require('../services/documents')
 const { getAllResponses } = require('../services/responses')
 
-const buildGenerateChain = async () => {
-  const retriever = (await getVectorStore()).asRetriever()
+const buildGenerateChain = async (knowledge) => {
+  const vectorStore = await getVectorStore()
+  let retriever
+  if (knowledge && knowledge.length > 0) {
+    const filter = {
+      filter: { "documentId": { "in": knowledge } }
+    }
+
+    retriever = vectorStore.asRetriever(filter)
+  } else {
+    retriever = vectorStore.asRetriever()
+  }
 
   const prompt = ChatPromptTemplate.fromTemplate(prompts[types.GENERATE_PROMPT])
 
@@ -71,12 +81,12 @@ const getPreviousResponse = async (documentId) => {
   return response
 }
 
-const generateResponse = async (documentId, userPrompt) => {
+const generateResponse = async (documentId, userPrompt, knowledge) => {
   const document = await getDocumentContent(documentId)
 
   const previousResponse = await getPreviousResponse(documentId)
 
-  const generateChain = await buildGenerateChain()
+  const generateChain = await buildGenerateChain(knowledge)
   const summaryChain = buildSummaryChain()
 
   const chain = RunnableMap.from({

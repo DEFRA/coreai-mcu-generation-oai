@@ -1,6 +1,5 @@
 require('./insights').setup()
 require('log-timestamp')
-const { generateResponse } = require('./lib/generation')
 const messaging = require('./messaging')
 const createServer = require('./server')
 
