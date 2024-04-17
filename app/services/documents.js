@@ -53,8 +53,17 @@ const getDocumentData = async (id) => {
 }
 
 const updateMetadata = async (id, metadata) => {
+  const payload = {
+    author: metadata.author,
+    keyPoints: metadata.keyPoints,
+    keyFacts: metadata.keyFacts,
+    sentiment: metadata.sentiment,
+    suggestedCategory: metadata.suggestedCategory,
+    summary: metadata.summary
+  }
+
   try {
-    await updateDocumentMetadata(id, metadata)
+    await updateDocumentMetadata(id, payload)
   } catch (error) {
     console.error('There was a problem updating document metadata', error)
     throw error
