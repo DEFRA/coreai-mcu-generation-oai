@@ -58,7 +58,7 @@ const updateMetadata = async (id, metadata) => {
     keyPoints: metadata.key_points,
     keyFacts: metadata.key_facts,
     sentiment: metadata.sentiment,
-    suggestedCategory: metadata.suggested_category,
+    suggestedCategory: metadata.category,
     summary: metadata.summary
   }
 
