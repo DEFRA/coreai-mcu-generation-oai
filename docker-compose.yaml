@@ -10,6 +10,7 @@ services:
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
       GENERATION_REQUEST_OAI_SUBSCRIPTION: ${GENERATION_REQUEST_OAI_SUBSCRIPTION:-coreai-mcu-generation-oai}
       GENERATION_REQUEST_TOPIC: ${GENERATION_REQUEST_TOPIC:-coreai-mcu-generation-request}
+      SUMMARY_REQUEST_TOPIC: ${SUMMARY_REQUEST_TOPIC:-coreai-mcu-summary-request}
       RESPONSE_PROCESSING_QUEUE_ADDRESS: ${RESPONSE_PROCESSING_QUEUE_ADDRESS:-coreai-mcu-generation-response}
       POSTGRES_DB: coreai-mcu-knowledge-pgv
       POSTGRES_HOST: ${POSTGRES_HOST:-core-ai-mcu-knowledge-pgv}
