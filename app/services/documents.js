@@ -55,10 +55,10 @@ const getDocumentData = async (id) => {
 const updateMetadata = async (id, metadata) => {
   const payload = {
     author: metadata.author,
-    keyPoints: metadata.keyPoints,
-    keyFacts: metadata.keyFacts,
+    keyPoints: metadata.key_points,
+    keyFacts: metadata.key_facts,
     sentiment: metadata.sentiment,
-    suggestedCategory: metadata.suggestedCategory,
+    suggestedCategory: metadata.suggested_category,
     summary: metadata.summary
   }
 
