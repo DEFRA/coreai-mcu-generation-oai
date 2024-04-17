@@ -1,5 +1,5 @@
 const { format, parseISO } = require('date-fns')
-const { getDocuments, getDocumentContents, getDocumentMetadata } = require('../api/documents')
+const { getDocuments, getDocumentContents, getDocumentMetadata, updateDocumentMetadata } = require('../api/documents')
 
 const formatDocument = (document) => {
   const date = parseISO(document.properties.createdOn)
@@ -52,8 +52,27 @@ const getDocumentData = async (id) => {
   }
 }
 
+const updateMetadata = async (id, metadata) => {
+  const payload = {
+    author: metadata.author,
+    keyPoints: metadata.key_points,
+    keyFacts: metadata.key_facts,
+    sentiment: metadata.sentiment,
+    suggestedCategory: metadata.category,
+    summary: metadata.summary
+  }
+
+  try {
+    await updateDocumentMetadata(id, payload)
+  } catch (error) {
+    console.error('There was a problem updating document metadata', error)
+    throw error
+  }
+}
+
 module.exports = {
   getDocumentsData,
   getDocumentContent,
-  getDocumentData
+  getDocumentData,
+  updateMetadata
 }
