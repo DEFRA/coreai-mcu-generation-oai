@@ -13,7 +13,7 @@ const buildGenerateChain = async (knowledge) => {
   let retriever
   if (knowledge && knowledge.length > 0) {
     const filter = {
-      filter: { "documentId": { "in": knowledge } }
+      filter: { 'documentId': { 'in': knowledge } }
     }
 
     retriever = vectorStore.asRetriever(filter)
@@ -42,7 +42,7 @@ const buildGenerateChain = async (knowledge) => {
         }
       }),
       document: new RunnableLambda({
-        func: (input) => input.document,
+        func: (input) => input.document
       }),
       requests: new RunnableLambda({
         func: (input) => input.requests

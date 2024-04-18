@@ -10,7 +10,6 @@ const init = async () => {
   await messaging.start()
 }
 
-
 process.on('SIGTERM', async () => {
   await messaging.stop()
   process.exit(0)
