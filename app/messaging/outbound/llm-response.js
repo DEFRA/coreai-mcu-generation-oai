@@ -7,6 +7,7 @@ const createMessage = (data) => ({
     document_id: data.documentId,
     llm: 'GPT3.5',
     user_prompt: data.userPrompt,
+    knowledge: data.knowledge,
     citations: data.citations,
     response: data.response
   },

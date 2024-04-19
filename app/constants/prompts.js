@@ -1,6 +1,6 @@
 const types = {
   GENERATE_PROMPT: 'generate',
-  SUMMARISE_PROMPT: 'summarise',
+  SUMMARISE_PROMPT: 'summarise'
 }
 
 const generatePrompt = `
@@ -101,7 +101,7 @@ Return a JSON object that conforms to the schema below:
 
 const prompts = {
   [types.GENERATE_PROMPT]: generatePrompt,
-  [types.SUMMARISE_PROMPT]: summarisePrompt,
+  [types.SUMMARISE_PROMPT]: summarisePrompt
 }
 
 module.exports = {

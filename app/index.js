@@ -1,6 +1,5 @@
 require('./insights').setup()
 require('log-timestamp')
-const { generateResponse } = require('./lib/generation')
 const messaging = require('./messaging')
 const createServer = require('./server')
 
@@ -10,7 +9,6 @@ const init = async () => {
   console.log('Server running on %s', server.info.uri)
   await messaging.start()
 }
-
 
 process.on('SIGTERM', async () => {
   await messaging.stop()
