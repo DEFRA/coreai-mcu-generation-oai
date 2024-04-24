@@ -26,3 +26,4 @@ services:
       GENERATION_MODEL_NAME: ${GENERATION_MODEL_NAME:-test}
       DOCUMENTS_API_BASE_URL: ${DOCUMENTS_API_BASE_URL:-coreai-mcu-documents}
       RESPONSES_API_BASE_URL: ${RESPONSES_API_BASE_URL:-coreai-mcu-responses}
+      PROMPTS_API_BASE_URL: ${PROMPTS_API_BASE_URL:-coreai-mcu-prompts}

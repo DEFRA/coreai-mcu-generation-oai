@@ -7,8 +7,15 @@ const { formatDocumentsAsString } = require('langchain/util/document')
 const { RunnableMap, RunnableLambda, RunnableSequence, RunnablePassthrough } = require('@langchain/core/runnables')
 const { getDocumentContent } = require('../services/documents')
 const { getAllResponses } = require('../services/responses')
+const { getPrompt } = require('../services/prompts')
 
-const buildGenerateChain = async (knowledge) => {
+const getChainPrompt = async (model, type, name) => {
+  const response = await getPrompt('mcu', model, type, name)
+
+  return ChatPromptTemplate.fromTemplate(response.prompt)
+}
+
+const buildGenerateChain = async (prompt, knowledge) => {
   const vectorStore = await getVectorStore()
   let retriever
   if (knowledge && knowledge.length > 0) {
@@ -20,8 +27,6 @@ const buildGenerateChain = async (knowledge) => {
   } else {
     retriever = vectorStore.asRetriever()
   }
-
-  const prompt = ChatPromptTemplate.fromTemplate(prompts[types.GENERATE_PROMPT])
 
   const chain = RunnableSequence.from([
     RunnablePassthrough.assign({
@@ -81,16 +86,18 @@ const getPreviousResponse = async (documentId) => {
   return response
 }
 
-const generateResponse = async (documentId, userPrompt, knowledge) => {
+const generateResponse = async (data) => {
+  const documentId = data.document_id
   const document = await getDocumentContent(documentId)
-
   const previousResponse = await getPreviousResponse(documentId)
 
-  const chain = await buildGenerateChain(knowledge)
+  const prompt = await getChainPrompt(data.model_id, 'correspondence', data.prompt_id)
+
+  const chain = await buildGenerateChain(prompt, data.knowledge)
 
   const generate = await chain.invoke({
     document,
-    requests: userPrompt,
+    requests: data.user_prompt,
     previous_response: previousResponse
   })
 
@@ -98,7 +105,7 @@ const generateResponse = async (documentId, userPrompt, knowledge) => {
     documentId,
     response: generate.response,
     citations: generate.context,
-    userPrompt
+    userPrompt: data.user_prompt
   }
 }
 
