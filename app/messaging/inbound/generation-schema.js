@@ -5,6 +5,7 @@ const schema = Joi.object({
   knowledge: Joi.array().required(),
   model_id: Joi.string().required(),
   prompt_id: Joi.string().required(),
+  persona_id: Joi.string().allow('').required(),
   user_prompt: Joi.string().allow('').required(),
   project_name: Joi.string().required(),
   type: Joi.string().required().allow('correspondence', 'briefing')
