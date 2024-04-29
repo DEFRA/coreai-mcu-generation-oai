@@ -2,10 +2,12 @@ const Joi = require('joi')
 
 const schema = Joi.object({
   document_id: Joi.string().uuid().required(),
+  knowledge: Joi.array().required(),
   model_id: Joi.string().required(),
   prompt_id: Joi.string().required(),
   user_prompt: Joi.string().allow('').required(),
-  knowledge: Joi.array().required()
+  project_name: Joi.string().required(),
+  type: Joi.string().required().allow('correspondence', 'briefing')
 }).required()
 
 const validateGenerationMessage = (request) => {

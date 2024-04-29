@@ -9,8 +9,8 @@ const { getDocumentContent } = require('../services/documents')
 const { getAllResponses } = require('../services/responses')
 const { getPrompt } = require('../services/prompts')
 
-const getChainPrompt = async (model, type, name) => {
-  const response = await getPrompt('mcu', model, type, name)
+const getChainPrompt = async (modelId, promptId, promptType, projectName) => {
+  const response = await getPrompt(projectName, modelId, promptType, promptId)
 
   return ChatPromptTemplate.fromTemplate(response.prompt)
 }
@@ -91,7 +91,7 @@ const generateResponse = async (data) => {
   const document = await getDocumentContent(documentId)
   const previousResponse = await getPreviousResponse(documentId)
 
-  const prompt = await getChainPrompt(data.model_id, 'correspondence', data.prompt_id)
+  const prompt = await getChainPrompt(data.model_id, data.prompt_id, data.type, data.project_name)
 
   const chain = await buildGenerateChain(prompt, data.knowledge)
 
