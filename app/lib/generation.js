@@ -1,6 +1,6 @@
 const { ChatPromptTemplate } = require('@langchain/core/prompts')
 const { prompts, types } = require('../constants/prompts')
-const { generation } = require('../lib/ai')
+const { awsGeneration } = require('../lib/ai')
 const { getVectorStore } = require('../lib/vector-store')
 const { StringOutputParser, JsonOutputParser } = require('@langchain/core/output_parsers')
 const { formatDocumentsAsString } = require('langchain/util/document')
@@ -28,7 +28,7 @@ const buildGenerateChain = async (knowledge) => {
       context: (input) => formatDocumentsAsString(input.context)
     }),
     prompt,
-    generation,
+    awsGeneration,
     new StringOutputParser()
   ])
 
@@ -66,7 +66,7 @@ const buildSummaryChain = () => {
       document: (input) => input.document
     }),
     prompt,
-    generation,
+    awsGeneration,
     new JsonOutputParser()
   ])
 

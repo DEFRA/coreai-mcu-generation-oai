@@ -56,6 +56,8 @@ const config = {
   }
 }
 
+console.log(config.summarySubscription.address)
+
 const { error, value } = schema.validate(config, { abortEarly: false })
 
 if (error) {

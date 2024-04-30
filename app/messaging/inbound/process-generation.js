@@ -9,8 +9,12 @@ const processGenerationRequest = async (message, receiver) => {
 
     console.log(`Processing generation request: ${util.inspect(body)}`)
 
-    const response = await generateResponse(body.document_id, body.user_prompt, body.knowledge)
-    await sendResponse(response)
+    try {
+      const response = await generateResponse(body.document_id, body.user_prompt, body.knowledge)
+      await sendResponse(response)
+    } catch (err) {
+      console.error('Error generating response:', err)
+    }
 
     await receiver.completeMessage(message)
   } catch (err) {
