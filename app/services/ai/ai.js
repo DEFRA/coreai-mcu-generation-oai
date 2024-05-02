@@ -1,5 +1,5 @@
 const { OpenAIEmbeddings, ChatOpenAI } = require('@langchain/openai')
-const aiConfig = require('../config/ai')
+const aiConfig = require('../../config/ai')
 
 const onFailedAttempt = async (error) => {
   if (error.retriesLeft === 0) {

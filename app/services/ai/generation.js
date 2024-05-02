@@ -1,13 +1,13 @@
 const { ChatPromptTemplate } = require('@langchain/core/prompts')
-const { prompts, types } = require('../constants/prompts')
+const { prompts, types } = require('../../constants/prompts')
 const { generation } = require('../lib/ai')
 const { getVectorStore } = require('../lib/vector-store')
 const { StringOutputParser, JsonOutputParser } = require('@langchain/core/output_parsers')
 const { formatDocumentsAsString } = require('langchain/util/document')
 const { RunnableMap, RunnableLambda, RunnableSequence, RunnablePassthrough } = require('@langchain/core/runnables')
-const { getDocumentContent } = require('../services/documents')
-const { getAllResponses } = require('../services/responses')
-const { getPrompt } = require('../services/prompts')
+const { getDocumentContent } = require('../documents')
+const { getAllResponses } = require('../responses')
+const { getPrompt } = require('../prompts')
 
 const getChainPrompt = async (modelId, promptId, promptType, projectName) => {
   const response = await getPrompt(projectName, modelId, promptType, promptId)
