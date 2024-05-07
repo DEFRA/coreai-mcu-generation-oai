@@ -1,5 +1,5 @@
 const { PGVectorStore } = require('@langchain/community/vectorstores/pgvector')
-const { embeddings } = require('./ai')
+const { embeddings } = require('./clients')
 const { getConfig } = require('../../config/db')
 
 let vectorStore
