@@ -6,6 +6,9 @@ const schema = Joi.object({
   }),
   responsesApi: Joi.object({
     baseUrl: Joi.string().required()
+  }),
+  promptsApi: Joi.object({
+    baseUrl: Joi.string().required()
   })
 })
 
@@ -15,6 +18,9 @@ const config = {
   },
   responsesApi: {
     baseUrl: process.env.RESPONSES_API_BASE_URL
+  },
+  promptsApi: {
+    baseUrl: process.env.PROMPTS_API_BASE_URL
   }
 }
 

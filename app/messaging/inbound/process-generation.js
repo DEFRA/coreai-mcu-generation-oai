@@ -1,6 +1,6 @@
 const util = require('util')
 const { validateGenerationMessage } = require('./generation-schema')
-const { generateResponse } = require('../../lib/generation')
+const { generateResponse } = require('../../services/ai/generation')
 const { sendResponse } = require('../outbound/llm-response')
 
 const processGenerationRequest = async (message, receiver) => {
@@ -9,7 +9,7 @@ const processGenerationRequest = async (message, receiver) => {
 
     console.log(`Processing generation request: ${util.inspect(body)}`)
 
-    const response = await generateResponse(body.document_id, body.user_prompt, body.knowledge)
+    const response = await generateResponse(body)
     await sendResponse(response)
 
     await receiver.completeMessage(message)

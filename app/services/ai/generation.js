@@ -1,14 +1,22 @@
 const { ChatPromptTemplate } = require('@langchain/core/prompts')
-const { prompts, types } = require('../constants/prompts')
-const { generation } = require('../lib/ai')
-const { getVectorStore } = require('../lib/vector-store')
+const { prompts, types } = require('./../../constants/prompts')
+const { generation } = require('./clients')
+const { getVectorStore } = require('./vector-store')
 const { StringOutputParser, JsonOutputParser } = require('@langchain/core/output_parsers')
 const { formatDocumentsAsString } = require('langchain/util/document')
 const { RunnableMap, RunnableLambda, RunnableSequence, RunnablePassthrough } = require('@langchain/core/runnables')
-const { getDocumentContent } = require('../services/documents')
-const { getAllResponses } = require('../services/responses')
+const { getDocumentContent } = require('../../services/documents')
+const { getAllResponses } = require('../../services/responses')
+const { getPrompt } = require('../../services/prompts')
+const { getClient } = require('./clients')
 
-const buildGenerateChain = async (knowledge) => {
+const getChainPrompt = async (modelId, promptId, promptType, projectName) => {
+  const response = await getPrompt(projectName, modelId, promptType, promptId)
+
+  return ChatPromptTemplate.fromTemplate(response.prompt)
+}
+
+const buildGenerateChain = async (llm, prompt, knowledge) => {
   const vectorStore = await getVectorStore()
   let retriever
   if (knowledge && knowledge.length > 0) {
@@ -21,14 +29,12 @@ const buildGenerateChain = async (knowledge) => {
     retriever = vectorStore.asRetriever()
   }
 
-  const prompt = ChatPromptTemplate.fromTemplate(prompts[types.GENERATE_PROMPT])
-
   const chain = RunnableSequence.from([
     RunnablePassthrough.assign({
       context: (input) => formatDocumentsAsString(input.context)
     }),
     prompt,
-    generation,
+    llm,
     new StringOutputParser()
   ])
 
@@ -81,16 +87,20 @@ const getPreviousResponse = async (documentId) => {
   return response
 }
 
-const generateResponse = async (documentId, userPrompt, knowledge) => {
+const generateResponse = async (data) => {
+  const documentId = data.document_id
   const document = await getDocumentContent(documentId)
-
   const previousResponse = await getPreviousResponse(documentId)
 
-  const chain = await buildGenerateChain(knowledge)
+  const prompt = await getChainPrompt(data.model_id, data.prompt_id, data.type, data.project_name)
+
+  const llm = getClient(data.model_id)
+
+  const chain = await buildGenerateChain(llm, prompt, data.knowledge)
 
   const generate = await chain.invoke({
     document,
-    requests: userPrompt,
+    requests: data.user_prompt,
     previous_response: previousResponse
   })
 
@@ -98,7 +108,7 @@ const generateResponse = async (documentId, userPrompt, knowledge) => {
     documentId,
     response: generate.response,
     citations: generate.context,
-    userPrompt
+    userPrompt: data.user_prompt
   }
 }
 
