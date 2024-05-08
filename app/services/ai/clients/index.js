@@ -1,9 +1,11 @@
 const { openAi } = require('../../../config/ai').azure
 const { getOpenAiClient } = require('./azure')
+const { getBedrockClient } = require('./aws')
 const { getOllamaClient } = require('./ollama')
 
 const clients = {
   'azure:openai': getOpenAiClient,
+  'aws:bedrock': getBedrockClient,
   'ollama:ollama': getOllamaClient
 }
 
