@@ -7,6 +7,14 @@ jest.mock('../../app/server', () =>
     }
   })
 )
+
+jest.mock('../../app/messaging', () => {
+  return {
+    start: jest.fn(),
+    stop: jest.fn()
+  }
+})
+
 const createServer = require('../../app/server')
 
 describe('Server setup', () => {
