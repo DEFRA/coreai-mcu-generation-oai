@@ -43,7 +43,7 @@ const generateResponse = async (data) => {
 
   const documentId = data.document_id
   const userPrompt = data.user_prompt
-  
+
   const previousResponse = await getPreviousResponse(documentId)
 
   let generate

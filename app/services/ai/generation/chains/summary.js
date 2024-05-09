@@ -9,7 +9,7 @@ const buildSummaryChain = () => {
 
   const chain = RunnableSequence.from([
     {
-      document: (input) => input.document,
+      document: (input) => input.document
     },
     prompt,
     generation,
