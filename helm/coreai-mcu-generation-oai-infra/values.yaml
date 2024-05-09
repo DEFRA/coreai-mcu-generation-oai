@@ -2,7 +2,9 @@
 # You may create Queues, Topics, Subscriptions, Storage Accounts, Databases and Role Assignments on these here.
 
 namespaceTopics:
-  - name: coreai-mcu-generation-requests
+  - name: generate
     owner: 'no'
     roleAssignments:
       - roleName: 'TopicReceiver'
+    topicSubscriptions:
+      - name: generation-oai

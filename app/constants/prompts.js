@@ -1,6 +1,7 @@
 const types = {
   GENERATE_PROMPT: 'generate',
-  SUMMARISE_PROMPT: 'summarise'
+  SUMMARISE_PROMPT: 'summarise',
+  REFINE_PROMPT: 'refine'
 }
 
 const generatePrompt = `
@@ -99,9 +100,38 @@ Return a JSON object that conforms to the schema below:
 [/TEXT]
 `
 
+const refinePrompt = `
+[INST]
+You are an expert in proof-reading and refining responses to correspondence from the general public. You are assisting a Defra employee in refining your previous response contained in [PREVIOUS_RESPONSE] below.
+
+You have been provided the [CONTEXT] used to generate your [PREVIOUS_RESPONSE]. You should only provide a response based on the knowledge contained in [CONTEXT] below. You should not infer any additional information.
+
+The Defra employee has requested the following amendments to your [PREVIOUS_RESPONSE] in [OPERATOR_REQUESTS]. You should consider these requests when refining your response.
+
+For example:
+- The operator asks you to remove the third paragraph. => You should remove the third paragraph from your response.
+- The operator asks you to rephrase the second sentence. => You should rephrase the second sentence in your response.
+- The operator asks you to include a paragraph about a specific topic. => You should include a paragraph about the specific topic in your response using the [CONTEXT] provided.
+- The operator asks you to include a paragraph about a topic that is not in the [CONTEXT]. => You should not include a paragraph about the topic as it is not in the [CONTEXT].
+[/INST]
+
+[PREVIOUS_RESPONSE]
+{previous_response}
+[/PREVIOUS_RESPONSE]
+
+[CONTEXT]
+{context}
+[/CONTEXT]
+
+[OPERATOR_REQUESTS]
+{operator_requests}
+[/OPERATOR_REQUESTS]
+`
+
 const prompts = {
   [types.GENERATE_PROMPT]: generatePrompt,
-  [types.SUMMARISE_PROMPT]: summarisePrompt
+  [types.SUMMARISE_PROMPT]: summarisePrompt,
+  [types.REFINE_PROMPT]: refinePrompt
 }
 
 module.exports = {

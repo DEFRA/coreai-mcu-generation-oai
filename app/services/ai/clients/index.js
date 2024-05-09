@@ -23,10 +23,7 @@ const getClient = (modelId) => {
 
 const generation = getClient(`azure:openai:${openAi.generationModelName}`)
 
-const embeddings = {}
-
 module.exports = {
   getClient,
-  generation,
-  embeddings
+  generation
 }

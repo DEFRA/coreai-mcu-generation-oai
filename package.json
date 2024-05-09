@@ -1,6 +1,6 @@
 {
   "name": "coreai-mcu-generation-oai",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "homepage": "github.com?owner=defra&repo=coreai-mcu-generation-oai&organization=defra",
   "main": "app/index.js",
@@ -36,6 +36,8 @@
     "ffc-messaging": "^2.9.0",
     "joi": "^17.12.3",
     "langchain": "^0.1.30",
+    "langfuse": "^3.9.0",
+    "langfuse-langchain": "^3.9.0",
     "log-timestamp": "^0.3.0",
     "pg": "^8.11.4"
   },

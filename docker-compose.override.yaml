@@ -9,7 +9,7 @@ services:
     image: coreai-mcu-generation-oai-development
     container_name: coreai-mcu-generation-oai-development
     ports:
-      - "4000:3000"
+      - "${MCU_GEN_OAI_PORT:-3000}:3000"
       - "8000:9229"
     volumes:
       - ./app:/home/node/app

@@ -1,7 +1,7 @@
 const util = require('util')
 const { validateSummaryMessage } = require('./summary-schema')
-const { generateSummary } = require('../../services/ai/generation')
 const { updateMetadata } = require('../../services/documents')
+const { generateSummary } = require('../../services/ai/generation/summary')
 
 const processSummaryRequest = async (message, receiver) => {
   try {

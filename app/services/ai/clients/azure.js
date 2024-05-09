@@ -11,7 +11,7 @@ const getOpenAiClient = (model) => {
   if (!openAi.enabled) {
     throw new Error('Azure OpenAI is not enabled')
   }
-  
+
   return new ChatOpenAI({
     azureOpenAIApiInstanceName: openAi.instanceName,
     azureOpenAIApiKey: openAi.apiKey,
