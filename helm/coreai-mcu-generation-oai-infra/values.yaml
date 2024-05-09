@@ -3,7 +3,6 @@
 
 namespaceTopics:
   - name: generate
-    owner: 'no'
     roleAssignments:
       - roleName: 'TopicReceiver'
     topicSubscriptions:
