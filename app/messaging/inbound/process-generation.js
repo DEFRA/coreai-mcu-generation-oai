@@ -1,6 +1,6 @@
 const util = require('util')
 const { validateGenerationMessage } = require('./generation-schema')
-const { generateResponse } = require('../../services/ai/generation')
+const { generateResponse } = require('../../services/ai/generation/response')
 const { sendResponse } = require('../outbound/llm-response')
 
 const processGenerationRequest = async (message, receiver) => {
