@@ -10,8 +10,8 @@ const getBedrockClient = (model) => {
     model,
     region: bedrock.region,
     credentials: {
-      accessKeyId: bedrock.accessKey,
-      secretAccessKey: bedrock.secretKey
+      accessKeyId: bedrock.accessKeyId,
+      secretAccessKey: bedrock.secretAccessKey
     },
     modelKwargs: {
       max_tokens_to_sample: bedrock.maxTokensToSample
