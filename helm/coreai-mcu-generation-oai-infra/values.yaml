@@ -7,3 +7,14 @@ namespaceTopics:
       - roleName: 'TopicReceiver'
     topicSubscriptions:
       - name: generation-oai
+  - name: triage
+    roleAssignments:
+      - roleName: 'TopicReceiver'
+    topicSubscriptions:
+      - name: generation-oai
+
+namespaceQueues:
+  - name: responses
+    owner: 'no'
+    roleAssignments:
+      - roleName: 'QueueSender'

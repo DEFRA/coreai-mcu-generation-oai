@@ -15,6 +15,8 @@
   value: "coreai-mcu-generate"
 - key: SUMMARY_REQUEST_TOPIC
   value: "coreai-mcu-triage"
+- key: RESPONSE_PROCESSING_QUEUE_ADDRESS
+  value: "coreai-mcu-responses"
 - key: POSTGRES_HOST
   value: "{{servicename}}-POSTGRES-HOST"
   type: "keyvault"
