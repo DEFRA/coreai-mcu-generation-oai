@@ -14,7 +14,7 @@ namespaceTopics:
       - name: generation-oai
 
 namespaceQueues:
-  - name: responses
+  - name: response
     owner: 'no'
     roleAssignments:
       - roleName: 'QueueSender'
