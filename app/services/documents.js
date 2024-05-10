@@ -59,7 +59,8 @@ const updateMetadata = async (id, metadata) => {
     keyFacts: metadata.key_facts,
     sentiment: metadata.sentiment,
     suggestedCategory: metadata.category,
-    summary: metadata.summary
+    summary: metadata.summary,
+    status: metadata.status
   }
 
   try {
@@ -70,9 +71,16 @@ const updateMetadata = async (id, metadata) => {
   }
 }
 
+const updateStatus = async (id, status) => {
+  await updateMetadata(id, {
+    status
+  })
+}
+
 module.exports = {
   getDocumentsData,
   getDocumentContent,
   getDocumentData,
-  updateMetadata
+  updateMetadata,
+  updateStatus
 }
