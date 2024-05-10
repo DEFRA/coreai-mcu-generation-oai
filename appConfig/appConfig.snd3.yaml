@@ -9,6 +9,7 @@
   value: "https://coreai-mcu-prompts.coreai-mcu"
 - key: MESSAGE_QUEUE_HOST
   value: "{{servicename}}-MESSAGE-QUEUE-HOST"
+  type: "keyvault"
 - key: GENERATION_REQUEST_OAI_SUBSCRIPTION
   value: "coreai-mcu-generation-oai"
 - key: GENERATION_REQUEST_TOPIC
