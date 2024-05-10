@@ -10,13 +10,12 @@ const processGenerationRequest = async (message, receiver) => {
     const body = validateGenerationMessage(message.body)
 
     console.log(`Processing generation request: ${util.inspect(body)}`)
-
+    
     await updateStatus(body.document_id, status.GENERATING)
 
     const response = await generateResponse(body)
 
     await sendResponse(response)
-    
     await updateStatus(body.document_id, status.IN_PROGRESS)
 
     await receiver.completeMessage(message)
