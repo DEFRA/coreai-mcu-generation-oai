@@ -32,5 +32,6 @@ services:
       DOCUMENTS_API_BASE_URL: ${DOCUMENTS_API_BASE_URL:-coreai-mcu-documents}
       RESPONSES_API_BASE_URL: ${RESPONSES_API_BASE_URL:-coreai-mcu-responses}
       PROMPTS_API_BASE_URL: ${PROMPTS_API_BASE_URL:-coreai-mcu-prompts}
+      PERSONAS_API_BASE_URL: ${PERSONAS_API_BASE_URL:-coreai-mcu-personas}
       AZURE_OPENAI_ENABLED: ${AZURE_OPENAI_ENABLED:-false}
       OLLAMA_ENABLED: ${OLLAMA_ENABLED:-false}

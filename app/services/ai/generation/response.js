@@ -3,6 +3,7 @@ const { getAllResponses } = require('../../responses')
 const { getPrompt } = require('../../prompts')
 const { getClient } = require('../clients')
 const { buildGenerateChain, buildRefineChain } = require('./chains/response')
+const { getPersona } = require('../../personas')
 
 const getPreviousResponse = async (documentId) => {
   const responses = await getAllResponses(documentId)
@@ -38,6 +39,9 @@ const generateRefinedResponse = async (llm, prompt, userPrompt, knowledge, docum
 
 const generateResponse = async (data) => {
   const { prompt } = await getPrompt(data.project_name, data.model_id, data.type, data.prompt_id)
+  const { persona } = await getPersona(data.project_name, data.type, data.persona_id)
+
+  console.log(persona)
 
   const llm = getClient(data.model_id)
 
