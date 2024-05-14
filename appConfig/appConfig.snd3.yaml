@@ -7,6 +7,8 @@
   value: "https://coreai-mcu-responses.coreai-mcu"
 - key: PROMPTS_API_BASE_URL
   value: "https://coreai-mcu-prompts.coreai-mcu"
+- key: PERSONAS_API_BASE_URL
+  value: "https://coreai-mcu-persona.coreai-mcu"
 - key: MESSAGE_QUEUE_HOST
   value: "{{servicename}}-MESSAGE-QUEUE-HOST"
   type: "keyvault"
