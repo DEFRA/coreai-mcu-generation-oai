@@ -19,7 +19,7 @@ const processSummaryRequest = async (message, receiver) => {
       ...response,
       status: status.NOT_STARTED
     })
-    
+
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Error processing request:', err)
