@@ -62,7 +62,8 @@ const buildRefineChain = async (llm, prompt, knowledge) => {
         }
       }),
       operator_requests: (input) => input.operator_requests,
-      previous_response: (input) => input.previous_response
+      previous_response: (input) => input.previous_response,
+      persona: (input) => input.persona
     }
   })
 

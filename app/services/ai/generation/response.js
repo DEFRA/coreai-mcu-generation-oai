@@ -11,7 +11,7 @@ const getPreviousResponse = async (documentId) => {
   return responses[0] ?? ''
 }
 
-const generateInitialResponse = async (llm, prompt, knowledge, documentId) => {
+const generateInitialResponse = async (llm, prompt, persona, knowledge, documentId) => {
   const document = await getDocumentContent(documentId)
 
   const chain = await buildGenerateChain(llm, prompt, knowledge)
@@ -23,15 +23,16 @@ const generateInitialResponse = async (llm, prompt, knowledge, documentId) => {
   return generate
 }
 
-const generateRefinedResponse = async (llm, prompt, userPrompt, knowledge, documentId, previousResponse) => {
+const generateRefinedResponse = async (llm, prompt, persona, userPrompt, knowledge, documentId, previousResponse) => {
   const document = await getDocumentContent(documentId)
 
-  const chain = await buildRefineChain(llm, prompt, knowledge)
+  const chain = await buildRefineChain(llm, prompt, persona, knowledge)
 
   const generate = await chain.invoke({
     document,
     operator_requests: userPrompt,
-    previous_response: previousResponse.response
+    previous_response: previousResponse.response,
+    persona
   })
 
   return generate
@@ -40,8 +41,6 @@ const generateRefinedResponse = async (llm, prompt, userPrompt, knowledge, docum
 const generateResponse = async (data) => {
   const { prompt } = await getPrompt(data.project_name, data.model_id, data.type, data.prompt_id)
   const { persona } = await getPersona(data.project_name, data.type, data.persona_id)
-
-  console.log(persona)
 
   const llm = getClient(data.model_id)
 
@@ -54,10 +53,10 @@ const generateResponse = async (data) => {
 
   if (!previousResponse) {
     console.log('Generating initial response')
-    generate = await generateInitialResponse(llm, prompt, data.knowledge, documentId)
+    generate = await generateInitialResponse(llm, prompt, persona, data.knowledge, documentId)
   } else {
     console.log('Generating refined response')
-    generate = await generateRefinedResponse(llm, prompt, userPrompt, data.knowledge, documentId, previousResponse)
+    generate = await generateRefinedResponse(llm, prompt, persona, userPrompt, data.knowledge, documentId, previousResponse)
   }
 
   return {

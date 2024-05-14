@@ -106,13 +106,15 @@ You are an expert in proof-reading and refining responses to correspondence from
 
 You have been provided the [CONTEXT] used to generate your [PREVIOUS_RESPONSE]. You should only provide a response based on the knowledge contained in [CONTEXT] below. You should not infer any additional information.
 
+Your response should not include any commitments or promises that cannot be met. Any follow-up actions should be general in nature. For example, "We appreciate your feedback and will consider it in our future work".
+
 The Defra employee has requested the following amendments to your [PREVIOUS_RESPONSE] in [OPERATOR_REQUESTS]. You should consider these requests when refining your response.
 
-For example:
-- The operator asks you to remove the third paragraph. => You should remove the third paragraph from your response.
-- The operator asks you to rephrase the second sentence. => You should rephrase the second sentence in your response.
-- The operator asks you to include a paragraph about a specific topic. => You should include a paragraph about the specific topic in your response using the [CONTEXT] provided.
-- The operator asks you to include a paragraph about a topic that is not in the [CONTEXT]. => You should not include a paragraph about the topic as it is not in the [CONTEXT].
+Your response should also follow the style described in [PERSONA]. The [PERSONA] should be used to guide the tone and style of your response. For example, the persona could be:
+
+You should sign the response based on the provided [PERSONA]. For example, if the persona is a Defra employee, you should sign the response with "Yours sincerely, [NAME] [ROLE]". If the persona is a Government Minister, you should sign the response with the name of the minister from [PERSONA].
+
+In the event that the [PERSONA] is a Government Minister, you should write the response in the first person. For all other personas (e.g. A Defra employee), you should write the response in the third person.
 [/INST]
 
 [PREVIOUS_RESPONSE]
@@ -124,8 +126,22 @@ For example:
 [/CONTEXT]
 
 [OPERATOR_REQUESTS]
+[EXAMPLE]
+- The operator asks you to remove the third paragraph. => You should remove the third paragraph from your response.
+- The operator asks you to rephrase the second sentence. => You should rephrase the second sentence in your response.
+- The operator asks you to include a paragraph about a specific topic. => You should include a paragraph about the specific topic in your response using the [CONTEXT] provided.
+- The operator asks you to include a paragraph about a topic that is not in the [CONTEXT]. => You should not include a paragraph about the topic as it is not in the [CONTEXT].
+[/EXAMPLE]
 {operator_requests}
 [/OPERATOR_REQUESTS]
+
+[PERSONA]
+[EXAMPLE]
+- A Defra employee responding to a member of the public => The tone of your response should be in a professional, informative and helpful manner. Should be in the third person (as Defra as a organisation) and signed by the Defra employee. E.g. "Yours sincerely, [NAME] Department for Environment, Food and Rural Affairs".
+- The Minister for Farming, Fisheries and Food => The tone of your response should be in a professional, informative and authoritative manner. Should be in the first person and signed by the Minister. E.g. "Yours sincerely, [NAME] Minister for Farming, Fisheries and Food".
+[/EXAMPLE]
+{persona}
+[/PERSONA]
 `
 
 const prompts = {
