@@ -10,7 +10,11 @@ const clients = {
 }
 
 const getClient = (modelId) => {
-  const [vendor, service, model] = modelId.split(':')
+  let [vendor, service, model] = modelId.split(':')
+  if (service.indexOf('|') > -1 && !model) {
+    model = service.substr(service.indexOf('|') + 1)
+    service = service.substr(0, service.indexOf('|'))
+  }
 
   const client = clients[`${vendor}:${service}`]
 
