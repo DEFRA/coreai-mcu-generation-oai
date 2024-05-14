@@ -10,11 +10,7 @@ const clients = {
 }
 
 const getClient = (modelId) => {
-  let [vendor, service, model] = modelId.split(':')
-  if (service.indexOf('|') > -1 && !model) {
-    model = service.substr(service.indexOf('|') + 1)
-    service = service.substr(0, service.indexOf('|'))
-  }
+  const [vendor, service, model] = modelId.split('|')
 
   const client = clients[`${vendor}:${service}`]
 
@@ -25,7 +21,7 @@ const getClient = (modelId) => {
   return client(model)
 }
 
-const generation = getClient(`azure:openai:${openAi.generationModelName}`)
+const generation = getClient(`azure|openai|${openAi.generationModelName}`)
 
 module.exports = {
   getClient,
