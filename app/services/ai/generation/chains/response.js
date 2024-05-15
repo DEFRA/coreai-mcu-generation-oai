@@ -31,7 +31,8 @@ const buildGenerateChain = async (llm, prompt, knowledge) => {
           return documents
         }
       }),
-      document: (input) => input.document
+      document: (input) => input.document,
+      persona: (input) => input.persona
     }
   })
 

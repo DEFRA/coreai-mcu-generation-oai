@@ -17,7 +17,8 @@ const generateInitialResponse = async (llm, prompt, persona, knowledge, document
   const chain = await buildGenerateChain(llm, prompt, knowledge)
 
   const generate = await chain.invoke({
-    document
+    document,
+    persona
   })
 
   return generate
@@ -26,7 +27,7 @@ const generateInitialResponse = async (llm, prompt, persona, knowledge, document
 const generateRefinedResponse = async (llm, prompt, persona, userPrompt, knowledge, documentId, previousResponse) => {
   const document = await getDocumentContent(documentId)
 
-  const chain = await buildRefineChain(llm, prompt, persona, knowledge)
+  const chain = await buildRefineChain(llm, prompt, knowledge)
 
   const generate = await chain.invoke({
     document,
