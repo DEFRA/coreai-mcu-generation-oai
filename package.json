@@ -1,10 +1,6 @@
 {
   "name": "coreai-mcu-generation-oai",
-<<<<<<< ADT-139-Change-modelid-delimiter
-  "version": "0.1.12",
-=======
-  "version": "0.1.15",
->>>>>>> main
+  "version": "0.1.16",
   "description": "",
   "homepage": "github.com?owner=defra&repo=coreai-mcu-generation-oai&organization=defra",
   "main": "app/index.js",
