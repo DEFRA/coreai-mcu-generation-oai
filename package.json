@@ -1,6 +1,6 @@
 {
   "name": "coreai-mcu-generation-oai",
-  "version": "0.1.11",
+  "version": "0.1.15",
   "description": "",
   "homepage": "github.com?owner=defra&repo=coreai-mcu-generation-oai&organization=defra",
   "main": "app/index.js",
