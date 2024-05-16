@@ -31,7 +31,8 @@ const buildGenerateChain = async (llm, prompt, knowledge) => {
           return documents
         }
       }),
-      document: (input) => input.document
+      document: (input) => input.document,
+      persona: (input) => input.persona
     }
   })
 
@@ -62,7 +63,8 @@ const buildRefineChain = async (llm, prompt, knowledge) => {
         }
       }),
       operator_requests: (input) => input.operator_requests,
-      previous_response: (input) => input.previous_response
+      previous_response: (input) => input.previous_response,
+      persona: (input) => input.persona
     }
   })
 

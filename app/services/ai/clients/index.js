@@ -4,15 +4,15 @@ const { getBedrockClient } = require('./aws')
 const { getOllamaClient } = require('./ollama')
 
 const clients = {
-  'azure:openai': getOpenAiClient,
-  'aws:bedrock': getBedrockClient,
-  'ollama:ollama': getOllamaClient
+  'azure|openai': getOpenAiClient,
+  'aws|bedrock': getBedrockClient,
+  'ollama|ollama': getOllamaClient
 }
 
 const getClient = (modelId) => {
-  const [vendor, service, model] = modelId.split(':')
+  const [vendor, service, model] = modelId.split('|')
 
-  const client = clients[`${vendor}:${service}`]
+  const client = clients[`${vendor}|${service}`]
 
   if (!client) {
     throw new Error(`Client not found for model ${modelId}`)
@@ -21,7 +21,7 @@ const getClient = (modelId) => {
   return client(model)
 }
 
-const generation = getClient(`azure:openai:${openAi.generationModelName}`)
+const generation = getClient(`azure|openai|${openAi.generationModelName}`)
 
 module.exports = {
   getClient,
