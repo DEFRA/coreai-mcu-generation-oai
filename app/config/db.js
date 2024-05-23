@@ -7,7 +7,7 @@ const schema = Joi.object({
     host: Joi.string().required(),
     port: Joi.number().required(),
     user: Joi.string().required(),
-    password: Joi.string().when('$NODE_ENV', { is: 'production', then: Joi.optional(), otherwise: Joi.required() }),
+    password: Joi.string().required(),
     database: Joi.string().required()
   }).required(),
   tableName: Joi.string().default('mcu_knowledge_vectors'),
@@ -38,13 +38,16 @@ const config = {
 }
 
 const getConfig = async () => {
-  const { error, value } = schema.validate(config)
+  console.log('Getting Postgres config')
 
   if (process.env.NODE_ENV === 'production') {
-    const credential = new DefaultAzureCredential()
-    const { token } = await credential.getToken('https://ossrdbms-aad.database.windows.net', { requestOptions: { timeout: 1000 } })
+    console.log('Using managed identity for authentication')
+    const credential = new DefaultAzureCredential({ managedIdentityClientId: process.env.AZURE_CLIENT_ID })
+    const { token } = await credential.getToken('https://ossrdbms-aad.database.windows.net/.default', { requestOptions: { timeout: 1000 } })
     config.postgresConnectionOptions.password = token
   }
+
+  const { error, value } = schema.validate(config)
 
   if (error) {
     throw new Error(`Postgres config validation error: ${error.message}`)
