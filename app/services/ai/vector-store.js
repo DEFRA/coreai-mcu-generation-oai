@@ -13,11 +13,7 @@ const embeddings = new OpenAIEmbeddings({
 })
 
 const getVectorStore = async () => {
-  if (vectorStore) {
-    return vectorStore
-  }
-
-  vectorStore = await PGVectorStore.initialize(
+  vectorStore = new PGVectorStore(
     embeddings,
     await getConfig()
   )
