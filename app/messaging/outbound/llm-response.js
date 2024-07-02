@@ -5,7 +5,7 @@ const { LLM_RESPONSE } = require('../../constants/events')
 const createMessage = (data) => ({
   body: {
     document_id: data.documentId,
-    llm: 'GPT3.5',
+    llm: data.modelId,
     user_prompt: data.userPrompt,
     knowledge: data.knowledge,
     citations: data.citations,
