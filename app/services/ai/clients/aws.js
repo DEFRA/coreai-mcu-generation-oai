@@ -14,7 +14,7 @@ const getBedrockClient = (model) => {
       secretAccessKey: bedrock.secretAccessKey
     },
     modelKwargs: {
-      max_tokens_to_sample: bedrock.maxTokensToSample
+      max_tokens: bedrock.maxTokensToSample
     }
   })
 }
