@@ -13,7 +13,7 @@ const getConfig = (model) => {
 
   if (openAi.apiKey) {
     console.log('Using Azure OpenAI API key')
-    
+
     return {
       ...config,
       azureOpenAIApiKey: openAi.apiKey
