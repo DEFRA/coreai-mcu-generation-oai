@@ -24,7 +24,7 @@ const getConfig = (model) => {
 
   return {
     ...config,
-    credential: new DefaultAzureCredential({ managedIdentityClientId: process.env.AZURE_CLIENT_ID })
+    credentials: new DefaultAzureCredential({ managedIdentityClientId: process.env.AZURE_CLIENT_ID })
   }
 }
 
