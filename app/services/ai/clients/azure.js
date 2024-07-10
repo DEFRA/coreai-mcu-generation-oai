@@ -1,6 +1,6 @@
 const { openAi } = require('../../../config/ai').azure
 const { DefaultAzureCredential } = require('@azure/identity')
-const { AzureChatOpenAI } = require('@langchain/openai')
+const { AzureChatOpenAI } = require('@langchain/azure-openai')
 
 const getConfig = (model) => {
   const config = {
