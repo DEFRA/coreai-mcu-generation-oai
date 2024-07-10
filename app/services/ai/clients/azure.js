@@ -1,6 +1,6 @@
 const { openAi } = require('../../../config/ai').azure
 const { DefaultAzureCredential } = require('@azure/identity')
-const { ChatOpenAI } = require('@langchain/openai')
+const { AzureChatOpenAI } = require('@langchain/openai')
 
 const getConfig = (model) => {
   const config = {
@@ -39,7 +39,7 @@ const getOpenAiClient = (model) => {
     throw new Error('Azure OpenAI is not enabled')
   }
 
-  return new ChatOpenAI(getConfig(model))
+  return new AzureChatOpenAI(getConfig(model))
 }
 
 module.exports = {
