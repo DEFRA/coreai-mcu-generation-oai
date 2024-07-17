@@ -21,9 +21,6 @@ const getClient = (modelId) => {
   return client(model)
 }
 
-const generation = getClient(`azure|openai|${openAi.generationModelName}`)
-
 module.exports = {
-  getClient,
-  generation
+  getClient
 }
