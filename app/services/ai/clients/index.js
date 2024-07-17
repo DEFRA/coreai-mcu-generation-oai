@@ -1,4 +1,3 @@
-const { openAi } = require('../../../config/ai').azure
 const { getOpenAiClient } = require('./azure')
 const { getBedrockClient } = require('./aws')
 const { getOllamaClient } = require('./ollama')

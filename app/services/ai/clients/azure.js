@@ -60,7 +60,6 @@ const getOpenAiEmbeddingsClient = (model) => {
   return new AzureOpenAIEmbeddings(config)
 }
 
-
 module.exports = {
   getOpenAiClient,
   getOpenAiEmbeddingsClient
