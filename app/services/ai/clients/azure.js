@@ -1,9 +1,9 @@
 const { openAi } = require('../../../config/ai').azure
-const { ManagedIdentityCredential, getBearerTokenProvider } = require('@azure/identity')
+const { DefaultAzureCredential, getBearerTokenProvider } = require('@azure/identity')
 const { AzureChatOpenAI, AzureOpenAIEmbeddings } = require('@langchain/openai')
 
 const tokenProvider = getBearerTokenProvider(
-  new ManagedIdentityCredential(process.env.AZURE_CLIENT_ID),
+  new DefaultAzureCredential({ managedIdentityClientId: process.env.AZURE_CLIENT_ID }),
   'https://cognitiveservices.azure.com/.default'
 )
 
