@@ -64,7 +64,8 @@ const generateResponse = async (data) => {
     documentId,
     response: generate.response,
     citations: generate.context,
-    userPrompt
+    userPrompt,
+    modelId: data.model_id
   }
 }
 

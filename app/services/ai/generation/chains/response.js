@@ -1,13 +1,11 @@
 const { RunnablePassthrough, RunnableMap, RunnableLambda, RunnableSequence } = require('@langchain/core/runnables')
 const { StringOutputParser } = require('@langchain/core/output_parsers')
 const { formatDocumentsAsString } = require('langchain/util/document')
-const { getVectorStore } = require('../../vector-store')
+const { vectorStore } = require('../../vector-store')
 const { ChatPromptTemplate } = require('@langchain/core/prompts')
 const { prompts, types } = require('../../../../constants/prompts')
 
-const getRetriever = async (knowledge) => {
-  const vectorStore = await getVectorStore()
-
+const getRetriever = (knowledge) => {
   if (!knowledge || knowledge.length === 0) {
     return vectorStore.asRetriever()
   }
@@ -20,7 +18,7 @@ const getRetriever = async (knowledge) => {
 }
 
 const buildGenerateChain = async (llm, prompt, knowledge) => {
-  const retriever = await getRetriever(knowledge)
+  const retriever = getRetriever(knowledge)
 
   let retrieveChain = new RunnableMap({
     steps: {

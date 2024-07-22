@@ -5,7 +5,7 @@ const schema = Joi.object({
     openAi: Joi.object({
       enabled: Joi.boolean().required(),
       instanceName: Joi.string().required(),
-      apiKey: Joi.string().required(),
+      apiKey: Joi.string().optional(),
       embeddingsModelName: Joi.string().required(),
       generationModelName: Joi.string().required(),
       apiVersion: Joi.string().required()

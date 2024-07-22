@@ -1,4 +1,3 @@
-const { openAi } = require('../../../config/ai').azure
 const { getOpenAiClient } = require('./azure')
 const { getBedrockClient } = require('./aws')
 const { getOllamaClient } = require('./ollama')
@@ -21,9 +20,6 @@ const getClient = (modelId) => {
   return client(model)
 }
 
-const generation = getClient(`azure|openai|${openAi.generationModelName}`)
-
 module.exports = {
-  getClient,
-  generation
+  getClient
 }
