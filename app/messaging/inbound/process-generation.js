@@ -6,23 +6,30 @@ const { updateStatus } = require('../../services/documents')
 const status = require('../../constants/document-status')
 
 const processGenerationRequest = async (message, receiver) => {
+  let documentId
+
   try {
     const body = validateGenerationMessage(message.body)
+    documentId = body.document_id
 
     console.log(`Processing generation request: ${util.inspect(body)}`)
 
-    await updateStatus(body.document_id, status.GENERATING)
+    await updateStatus(documentId, status.GENERATING)
 
     const response = await generateResponse(body)
 
     await sendResponse(response)
-    await updateStatus(body.document_id, status.IN_PROGRESS)
+    await updateStatus(documentId, status.IN_PROGRESS)
 
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Error processing request:', err)
 
     await receiver.deadLetterMessage(message)
+
+    if (documentId) {
+      await updateStatus(documentId, status.FAILED)
+    }
   }
 }
 

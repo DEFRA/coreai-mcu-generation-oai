@@ -49,7 +49,7 @@ const buildGenerateChain = async (llm, prompt, knowledge) => {
 }
 
 const buildRefineChain = async (llm, prompt, knowledge) => {
-  const retriever = await getRetriever(knowledge)
+  const retriever = getRetriever(knowledge)
 
   let retrieveChain = new RunnableMap({
     steps: {
