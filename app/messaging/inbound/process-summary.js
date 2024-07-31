@@ -29,7 +29,7 @@ const processSummaryRequest = async (message, receiver) => {
     await receiver.deadLetterMessage(message)
 
     if (documentId) {
-      await updateStatus(body.document_id, status.FAILED)
+      await updateStatus(documentId, status.FAILED)
     }
   }
 }
