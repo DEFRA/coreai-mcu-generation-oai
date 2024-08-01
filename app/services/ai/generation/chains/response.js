@@ -1,4 +1,4 @@
-const { RunnablePassthrough, RunnableMap, RunnableLambda, RunnableSequence } = require('@langchain/core/runnables')
+const { RunnablePassthrough, RunnableMap, RunnableSequence } = require('@langchain/core/runnables')
 const { StringOutputParser } = require('@langchain/core/output_parsers')
 const { formatDocumentsAsString } = require('langchain/util/document')
 const { getRetriever } = require('../../vector-store')
