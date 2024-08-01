@@ -19,11 +19,12 @@ const processGenerationRequest = async (message, receiver) => {
     const response = await generateResponse(body)
 
     await sendResponse(response)
+
     await updateStatus(documentId, status.IN_PROGRESS)
 
     await receiver.completeMessage(message)
   } catch (err) {
-    console.error('Error processing request:', err)
+    console.error('Error processing generation request:', err)
 
     await receiver.deadLetterMessage(message)
 

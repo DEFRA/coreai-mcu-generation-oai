@@ -11,7 +11,8 @@ const getConfig = () => {
   const config = {
     azureOpenAIApiVersion: openAi.apiVersion,
     azureOpenAIApiInstanceName: openAi.instanceName,
-    onFailedAttempt
+    onFailedAttempt,
+    verbose: process.env.NODE_ENV === 'development'
   }
 
   if (openAi.apiKey) {
