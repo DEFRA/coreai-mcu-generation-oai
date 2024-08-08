@@ -50,6 +50,10 @@ const generateResponse = async (data) => {
 
   const previousResponse = await getPreviousResponse(documentId)
 
+  if (previousResponse && previousResponse.llm !== data.model_id) {
+    throw new Error('Previous response was generated with a different model')
+  }
+
   let generate
 
   if (!previousResponse) {

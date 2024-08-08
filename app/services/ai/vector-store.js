@@ -10,6 +10,19 @@ const vectorStore = new PGVectorStore(
   config
 )
 
+const getRetriever = (knowledge) => {
+  if (!knowledge || knowledge.length === 0) {
+    return vectorStore.asRetriever(10)
+  }
+
+  const filter = {
+    filter: { documentId: { in: knowledge } }
+  }
+
+  return vectorStore.asRetriever(10, filter)
+}
+
 module.exports = {
-  vectorStore
+  vectorStore,
+  getRetriever
 }

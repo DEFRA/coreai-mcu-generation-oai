@@ -5,9 +5,11 @@ const { generateSummary } = require('../../services/ai/generation/summary')
 const status = require('../../constants/document-status')
 
 const processSummaryRequest = async (message, receiver) => {
+  let documentId
+
   try {
     const body = validateSummaryMessage(message.body)
-    const documentId = body.document_id
+    documentId = body.document_id
 
     console.log(`Processing summary request: ${util.inspect(body)}`)
 
@@ -25,6 +27,10 @@ const processSummaryRequest = async (message, receiver) => {
     console.error('Error processing request:', err)
 
     await receiver.deadLetterMessage(message)
+
+    if (documentId) {
+      await updateStatus(documentId, status.FAILED)
+    }
   }
 }
 
