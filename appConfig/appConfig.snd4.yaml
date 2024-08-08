@@ -4,7 +4,7 @@
 - key: DOCUMENTS_API_BASE_URL
   value: "http://coreai-mcu-documents.crai-mcu.svc.cluster.local"
 - key: RESPONSES_API_BASE_URL
-  value: "http://coreai-mcu-knowledge-pgv.crai-mcu.svc.cluster.local"
+  value: "http://coreai-mcu-responses.crai-mcu.svc.cluster.local"
 - key: PROMPTS_API_BASE_URL
   value: "http://coreai-mcu-prompts.crai-mcu.svc.cluster.local"
 - key: PERSONAS_API_BASE_URL
