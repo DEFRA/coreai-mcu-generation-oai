@@ -2,13 +2,13 @@
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
 - key: DOCUMENTS_API_BASE_URL
-  value: "https://coreai-mcu-documents.coreai-mcu"
+  value: "http://coreai-mcu-documents.crai-mcu.svc.cluster.local"
 - key: RESPONSES_API_BASE_URL
-  value: "https://coreai-mcu-responses.coreai-mcu"
+  value: "http://coreai-mcu-responses.crai-mcu.svc.cluster.local"
 - key: PROMPTS_API_BASE_URL
-  value: "https://coreai-mcu-prompts.coreai-mcu"
+  value: "http://coreai-mcu-prompts.crai-mcu.svc.cluster.local"
 - key: PERSONAS_API_BASE_URL
-  value: "https://coreai-mcu-persona.coreai-mcu"
+  value: "http://coreai-mcu-personas.crai-mcu.svc.cluster.local"
 - key: MESSAGE_QUEUE_HOST
   value: "{{servicename}}-MESSAGE-QUEUE-HOST"
   type: "keyvault"
